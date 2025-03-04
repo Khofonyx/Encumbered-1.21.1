@@ -60,7 +60,6 @@ public class Encumbered {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
-        modEventBus.addListener(EncumberedDataMaps::registerDataMaps);
 
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
