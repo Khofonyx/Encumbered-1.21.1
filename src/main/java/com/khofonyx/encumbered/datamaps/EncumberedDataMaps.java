@@ -12,7 +12,7 @@ public class EncumberedDataMaps {
             ResourceLocation.parse("encumbered:item_weights"),
                     Registries.ITEM,
                     ItemWeight.CODEC).
-            synced(ItemWeight.CODEC, false) // Enables automatic syncing
+            synced(ItemWeight.CODEC, true) // Enables automatic syncing
             .build();
 
     public static void registerDataMaps(RegisterDataMapTypesEvent event) {
@@ -21,6 +21,15 @@ public class EncumberedDataMaps {
 
     public static float getWeight(Holder<Item> item) {
         ItemWeight weight = item.getData(ITEM_WEIGHTS);
-        return weight != null ? weight.weight() : 1.0f; // Default weight if none is found
+        String itemName = item.unwrapKey().toString();
+
+        if (weight == null) {
+            System.out.println("No weight found for item: " + itemName);
+            return 1.0f; // Default weight
+        }
+
+        System.out.println("Weight for " + itemName + ": " + weight.weight());
+        return weight.weight();
     }
+
 }

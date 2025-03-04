@@ -1,10 +1,13 @@
 package com.khofonyx.encumbered.common.events;
 
 import com.khofonyx.encumbered.common.config.WeightConfig;
+import com.khofonyx.encumbered.datamaps.EncumberedDataMaps;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -21,12 +24,17 @@ public class PlayerWeightHandler {
         }
     }
 
-    public static float calculateWeight(Player player){
+    public static float calculateWeight(Player player) {
         float totalWeight = 0;
-        for (ItemStack stack : player.getInventory().items){
-            ResourceLocation itemID = BuiltInRegistries.ITEM.getKey(stack.getItem());
-            totalWeight += WeightConfig.getWeight(itemID) * stack.getCount();
+
+        for (ItemStack stack : player.getInventory().items) {
+            Holder<Item> itemHolder = stack.getItemHolder();
+
+            if (itemHolder != null) {
+                totalWeight += EncumberedDataMaps.getWeight(itemHolder) * stack.getCount();
+            }
         }
+
         return totalWeight;
     }
 

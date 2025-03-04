@@ -1,7 +1,10 @@
 package com.khofonyx.encumbered;
 
+import com.khofonyx.encumbered.client.WeightOverlay;
 import com.khofonyx.encumbered.common.config.WeightConfig;
+import com.khofonyx.encumbered.datamaps.EncumberedDataMaps;
 import com.khofonyx.encumbered.item.ModItems;
+import net.neoforged.neoforge.client.event.RenderGuiEvent;
 import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
@@ -57,6 +60,8 @@ public class Encumbered {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(EncumberedDataMaps::registerDataMaps);
+
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
@@ -64,8 +69,6 @@ public class Encumbered {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-        WeightConfig.load();
-        System.out.println("Loaded weights.json");
     }
 
     // Add the example block item to the building blocks tab
@@ -86,7 +89,15 @@ public class Encumbered {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
+        }
+    }
 
+    @EventBusSubscriber(modid = Encumbered.MOD_ID, bus = EventBusSubscriber.Bus.GAME, value = Dist.CLIENT)
+    public class WeightOverlayRenderer {
+
+        @SubscribeEvent
+        public static void onRenderGui(RenderGuiEvent.Post event) {
+            WeightOverlay.renderWeight(event.getGuiGraphics());
         }
     }
 }
