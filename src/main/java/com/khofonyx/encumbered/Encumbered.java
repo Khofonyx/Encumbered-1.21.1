@@ -1,5 +1,6 @@
 package com.khofonyx.encumbered;
 
+import com.khofonyx.encumbered.common.config.WeightConfig;
 import com.khofonyx.encumbered.item.ModItems;
 import org.slf4j.Logger;
 
@@ -59,10 +60,12 @@ public class Encumbered {
 
         // Register our mod's ModConfigSpec so that FML can create and load the config file for us
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.SPEC);
+        System.out.println("Loaded Encumbered");
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        WeightConfig.load();
+        System.out.println("Loaded weights.json");
     }
 
     // Add the example block item to the building blocks tab
