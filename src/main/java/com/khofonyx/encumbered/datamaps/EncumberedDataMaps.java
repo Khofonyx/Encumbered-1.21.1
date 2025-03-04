@@ -10,7 +10,7 @@ import net.neoforged.neoforge.registries.datamaps.RegisterDataMapTypesEvent;
 
 public class EncumberedDataMaps {
     public static final DataMapType<Item, ItemWeight> ITEM_WEIGHTS = DataMapType.builder(
-            ResourceLocation.fromNamespaceAndPath("encumbered","data/item_weights"),
+            ResourceLocation.fromNamespaceAndPath("encumbered","item/item_weights"),
                     Registries.ITEM,
                     ItemWeight.CODEC).
             synced(ItemWeight.CODEC, true)
@@ -26,6 +26,9 @@ public class EncumberedDataMaps {
         String itemName = item.unwrapKey().toString();
 
         if (weight == null) {
+            System.out.println("DataMapType registered with resource location: " +
+                    ResourceLocation.fromNamespaceAndPath("encumbered","encumbered/data_maps/item/item_weights"));
+
             System.out.println("No weight found for item: " + itemName);
             return 1.0f; // Default weight
         }
