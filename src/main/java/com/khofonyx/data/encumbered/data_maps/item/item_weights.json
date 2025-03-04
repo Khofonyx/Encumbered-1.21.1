@@ -1,0 +1,7 @@
+{
+  "values": {
+    "minecraft:iron_ingot": { "weight": 2.5 },
+    "minecraft:gold_ingot": { "weight": 3.0 },
+    "#minecraft:logs": { "weight": 1.0 }
+  }
+}
